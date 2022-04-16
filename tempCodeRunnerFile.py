@@ -1,1 +1,1 @@
-x5
+final_states={'q1'}
