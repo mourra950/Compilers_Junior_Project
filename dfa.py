@@ -17,4 +17,9 @@ dfa = DFA(
     final_states={'1', '2'}
 )
 
+<<<<<<< HEAD
 print(dfa.read_input('I+I+N/I-N'))
+=======
+print(dfa.read_input('0'))
+#lalalalala
+>>>>>>> 969e931de4f1059e71af8860189956910b84131a
