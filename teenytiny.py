@@ -22,6 +22,7 @@ def main():
         if(token.kind == TokenType.DIVIDE):
             a.append('/')
         token = lexer.getToken()
+    print(a)
     dfa.dfafunction(a)
 
 
