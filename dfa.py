@@ -23,11 +23,13 @@ def dfafunction(a):
     if dfa.accepts_input(a):
         print("final state is :"+str(dfa.read_input(a)))
     else:
-        print("not valid")
+        print("the last visited state is not accepted")
+
     try:
         b = dfa.read_input_stepwise(a)
     except:
         print("not valid")
+
     count = 0
     try:
         for i in b:
