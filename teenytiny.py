@@ -8,6 +8,7 @@ def main():
     token = lexer.getToken()
     while token.kind != TokenType.EOF:
         print(token.kind)
+
         token = lexer.getToken()
 
 
