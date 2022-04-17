@@ -18,3 +18,4 @@ dfa = DFA(
 )
 
 print(dfa.read_input('0'))
+#lalalalala
