@@ -2,11 +2,11 @@ import dfa
 from lex import *
 
 
-def main():
+def main(input1):
     a = []
-    input1 = input("enter the lexical expression to analyze : ")
+    
     lexer = Lexer(input1)
-
+    print(input1)
     token = lexer.getToken()
     while token.kind != TokenType.EOF:
         if(token.kind == TokenType.NUM):
@@ -24,6 +24,6 @@ def main():
         token = lexer.getToken()
     print(a)
     dfa.dfafunction(a)
+   
 
 
-main()

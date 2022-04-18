@@ -2,7 +2,7 @@ from tkinter import*
 from tkinter import Button
 import tkinter as tk
 from matplotlib import image
-
+import teenytiny 
 from matplotlib.pyplot import margins
 root= Tk() 
 root.title('Tiny Scanner App')
@@ -43,11 +43,14 @@ my_label1=Label (frame, text="Welcome to our Tiny Scanner App", font=('Arial', 2
 my_label2=Label (frame,text="Case 1 : Arithmetic Expressions ",font=('Chaucer', 15),fg='red',padx=10,pady=10).grid(row=3,column=5)
 my_label3=Label (frame,text="kindly enter your input code here ",font=('Chaucer', 15),fg='blue',padx=10 ,pady=10).grid(row=4,column=5)
 def click():
+    
     mylabel=Label(root,text='token chosen :'+e.get())
-    mylabel.pack()
+    mylabel.grid(row=2,column=3)
+    teenytiny.main(e.get())
+    
 e=Entry(frame,width=50  ,fg='red',font=('Chaucer',20))
 e.grid(row=5,column=5)
-myBtn1 =Button (frame ,text="Tap to scan code" ,padx=20 ,pady=20 ,bg='white',fg='black')
+myBtn1 =Button (frame ,text="Tap to scan code" ,padx=20 ,pady=20 ,bg='white',fg='black',command=click())
 myBtn1.grid(row=7,column=5,padx=10,pady=10)
 myBtn2 =Button (frame ,text="Tap to Show DFA" ,padx=20 ,pady=20 ,bg='white',fg='black')
 myBtn2.grid(row=8,column=5,padx=10,pady=10)
