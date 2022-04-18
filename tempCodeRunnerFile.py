@@ -1,1 +1,1 @@
-final_states={'q1'}
+t = Table(frame1)

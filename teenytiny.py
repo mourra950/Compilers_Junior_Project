@@ -2,9 +2,9 @@ import dfa
 from lex import *
 
 
-def main(input1):
+def analizer(input1):
     a = []
-    
+
     lexer = Lexer(input1)
     print(input1)
     token = lexer.getToken()
@@ -24,6 +24,4 @@ def main(input1):
         token = lexer.getToken()
     print(a)
     dfa.dfafunction(a)
-   
-
-
+    return a
