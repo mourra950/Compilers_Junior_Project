@@ -12,6 +12,7 @@ root.title('Tiny Scanner App')
 root.geometry("1000x800")
 # root.configure(background='black')
 
+
 class App(tk.Tk):
     def __init__(self):
         super().__init__()
@@ -19,7 +20,7 @@ class App(tk.Tk):
         self.title('Treeview demo')
         self.geometry('620x200')
         self.tree = self.create_tree_widget()
-        
+
     def create_tree_widget(self):
         columns = ('first_name', 'last_name', 'email')
         tree = ttk.Treeview(self, columns=columns, show='headings')
@@ -32,16 +33,11 @@ class App(tk.Tk):
         tree.grid(row=0, column=0, sticky=tk.NSEW)
         # adding an item
         tree.insert('', tk.END, values=('John', 'Doe', 'john.doe@email.com'))
-       
 
         return tree
 
 
-
-
-
 # take the data
-
 frame = LabelFrame(root)
 frame.grid(row=4, column=2, padx=10, pady=10)
 my_label1 = Label(frame, text="Welcome to our Tiny Scanner App",
@@ -56,8 +52,6 @@ def click():
     mylabel = Label(root, text='token chosen :'+e.get())
     mylabel.grid(row=5, column=5)
     a = teenytiny.analizer(e.get())
-  
-    
 
 
 e = Entry(frame, width=50, fg='red', font=('Chaucer', 20))

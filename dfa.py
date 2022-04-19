@@ -31,9 +31,4 @@ def dfafunction(a):
         print("not valid")
 
     count = 0
-    try:
-        for i in b:
-            print("step: "+str(count)+" is state "+str(i))
-            count += 1
-    except:
-        print("the last state is not valid")
+    
