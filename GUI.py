@@ -1,6 +1,7 @@
 from tkinter import*
 from tkinter import Button
 import tkinter as tk
+from tkinter import ttk
 from matplotlib import image, table
 import teenytiny
 
@@ -11,41 +12,36 @@ root.title('Tiny Scanner App')
 root.geometry("1000x800")
 # root.configure(background='black')
 
+class App(tk.Tk):
+    def __init__(self):
+        super().__init__()
 
-class Table:
+        self.title('Treeview demo')
+        self.geometry('620x200')
+        self.tree = self.create_tree_widget()
+        
+    def create_tree_widget(self):
+        columns = ('first_name', 'last_name', 'email')
+        tree = ttk.Treeview(self, columns=columns, show='headings')
 
-    def __init__(self, frame):
+        # define headings
+        tree.heading('first_name', text='First Name')
+        tree.heading('last_name', text='Last Name')
+        tree.heading('email', text='Email')
 
-        # code for creating table
-        for i in range(total_rows):
-            for j in range(total_columns):
+        tree.grid(row=0, column=0, sticky=tk.NSEW)
+        # adding an item
+        tree.insert('', tk.END, values=('John', 'Doe', 'john.doe@email.com'))
+       
 
-                self.e = Entry(frame, width=20, fg='black',
-                               font=('Arial', 15, 'bold'))
+        return tree
 
-                self.e.grid(row=i, column=j)
-                self.e.insert(END, lst[i][j])
 
-    def refresh_table(self, frame):
-        for i in range(total_rows):
-            for j in range(total_columns):
 
-                self.e = Entry(frame, width=20, fg='black',
-                               font=('Arial', 15, 'bold'))
-
-                self.e.grid(row=i, column=j)
-                self.e.insert(END, lst[i][j])
 
 
 # take the data
 
-lst = [('TokenName', 'TokenType')]
-
-# find total number of rows and
-# columns in list
-total_rows = len(lst)
-total_columns = len(lst[0])
-# create root window
 frame = LabelFrame(root)
 frame.grid(row=4, column=2, padx=10, pady=10)
 my_label1 = Label(frame, text="Welcome to our Tiny Scanner App",
@@ -60,9 +56,8 @@ def click():
     mylabel = Label(root, text='token chosen :'+e.get())
     mylabel.grid(row=5, column=5)
     a = teenytiny.analizer(e.get())
-    for i in a:
-        lst.append((i, 'test'))
-    Table.__init__
+  
+    
 
 
 e = Entry(frame, width=50, fg='red', font=('Chaucer', 20))
@@ -79,7 +74,7 @@ my_label3 = Label(frame, text="Tokens Table ", font=(
     'Chaucer', 15), fg='black', padx=10, pady=10).grid(row=10, column=5)
 frame1 = LabelFrame(root)
 frame1.grid(row=4, column=3)
-t = Table(frame1)
+
 canvas = Canvas(root, width=250, height=250)
 canvas.grid(row=11, column=2, padx=10, pady=10)
 my_image = PhotoImage(file='compilers.gif')
