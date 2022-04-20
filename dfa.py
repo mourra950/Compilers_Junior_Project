@@ -42,11 +42,11 @@ def dfafunction(a):
     for i in a:
         test+=i
        
-    dfa.show_diagram(test,filename='DFAA',view=True,state_seperation=5)
+    dfa.show_diagram(test,filename='DFAA',view=True,state_seperation=3)
     
    
 
 
 
-b=['+','+','+']
+b=['N','+','I','+','+']
 dfafunction(b)
