@@ -4,16 +4,13 @@ from automata.fa.dfa import DFA
 
 def dfafunction(a):
     dfa = DFA(
-        states={'start', '1', '2', '3', '4', '5', '6', 'dead'},
+        states={'start', '1', '2', '3', 'dead'},
         input_symbols={'+', '-', '/', '*', 'ID', 'NUM'},
         transitions={
             'start': {'+': 'dead', '-': 'dead', '/': 'dead', '*': 'dead', 'ID': '1', 'NUM': '2'},
-            '1': {'+': '3', '-': '4', '*': '5', '/': '6', 'ID': 'dead', 'NUM': 'dead'},
-            '2': {'+': '3', '-': '4', '*': '5', '/': '6', 'ID': 'dead', 'NUM': 'dead'},
+            '1': {'+': '3', '-': '3', '*': '3', '/': '3', 'ID': 'dead', 'NUM': 'dead'},
+            '2': {'+': '3', '-': '3', '*': '3', '/': '3', 'ID': 'dead', 'NUM': 'dead'},
             '3': {'+': 'dead', '-': 'dead', '/': 'dead', '*': 'dead', 'ID': '1', 'NUM': '2'},
-            '4': {'+': 'dead', '-': 'dead', '/': 'dead', '*': 'dead', 'ID': '1', 'NUM': '2'},
-            '5': {'+': 'dead', '-': 'dead', '/': 'dead', '*': 'dead', 'ID': '1', 'NUM': '2'},
-            '6': {'+': 'dead', '-': 'dead', '/': 'dead', '*': 'dead', 'ID': '1', 'NUM': '2'},
             'dead': {'+': 'dead', '-': 'dead', '/': 'dead', '*': 'dead', 'ID': 'dead', 'NUM': 'dead'}
         },
         initial_state='start',
