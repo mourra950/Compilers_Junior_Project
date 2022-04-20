@@ -13,19 +13,19 @@ from visual_automata.fa.dfa import VisualDFA
 def dfafunction(a):
     dfa = DFA(
         states={'start', '1', '2', '3', 'dead'},
-        input_symbols={'+', '-', '/', '*', 'ID', 'NUM'},
+        input_symbols={'+', '-', '/', '*', 'I', 'N'},
         transitions={
-            'start': {'+': 'dead', '-': 'dead', '/': 'dead', '*': 'dead', 'ID': '1', 'NUM': '2'},
-            '1': {'+': '3', '-': '3', '*': '3', '/': '3', 'ID': 'dead', 'NUM': 'dead'},
-            '2': {'+': '3', '-': '3', '*': '3', '/': '3', 'ID': 'dead', 'NUM': 'dead'},
-            '3': {'+': 'dead', '-': 'dead', '/': 'dead', '*': 'dead', 'ID': '1', 'NUM': '2'},
-            'dead': {'+': 'dead', '-': 'dead', '/': 'dead', '*': 'dead', 'ID': 'dead', 'NUM': 'dead'}
+            'start': {'+': 'dead', '-': 'dead', '/': 'dead', '*': 'dead', 'I': '1', 'N': '2'},
+            '1': {'+': '3', '-': '3', '*': '3', '/': '3', 'I': 'dead', 'N': 'dead'},
+            '2': {'+': '3', '-': '3', '*': '3', '/': '3', 'I': 'dead', 'N': 'dead'},
+            '3': {'+': 'dead', '-': 'dead', '/': 'dead', '*': 'dead', 'I': '1', 'N': '2'},
+            'dead': {'+': 'dead', '-': 'dead', '/': 'dead', '*': 'dead', 'I': 'dead', 'N': 'dead'}
         },
         initial_state='start',
         final_states={'1', '2'}
     )
     b = []
-    test=""
+    
     if dfa.accepts_input(a):
         print("final state is :"+str(dfa.read_input(a)))
     else:
@@ -34,14 +34,15 @@ def dfafunction(a):
     try:
         b = dfa.read_input_stepwise(a)
     except:
-        print("not valid")
+        print("not valI")
 
     count = 0
     dfa = VisualDFA(dfa)
+    test=""
     for i in a:
-        test+=str(i)
-        
-    dfa.show_diagram(test,filename='DFAA',view=True)
+        test+=i
+       
+    dfa.show_diagram(test,filename='DFAA',view=True,state_seperation=5)
     
    
 
