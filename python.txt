@@ -1,2 +1,9 @@
 pip install automata-lib
 pip install pyvis
+pip install PyQt5
+pip install pyqt5-tools
+pip install visual-automata
+pip install pandas
+pip install graphviz
+pip install colormath
+pip install jupyterlab

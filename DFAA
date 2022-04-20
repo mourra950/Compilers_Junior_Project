@@ -1,5 +1,5 @@
 digraph {
-	ranksep=3 size="8, 8"
+	ranksep=1 size="8, 8"
 	rankdir=LR
 	Initial [label="" fontsize=14.0 shape=point]
 	1 [fontsize=14.0 shape=doublecircle]

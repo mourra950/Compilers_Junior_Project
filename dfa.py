@@ -35,9 +35,8 @@ def dfafunction(a):
         b = dfa.read_input_stepwise(a)
     except:
         print("not valid")
-
     
-    # dfa = VisualDFA(dfa)
+    # dfa = VisualDFA(dfa) 
     # test=""
     # for i in a:
     #     test+=i
@@ -65,7 +64,7 @@ def dfashow(a):
     for i in a:
         test+=i
        
-    dfa.show_diagram(test,filename='DFAA',view=True,state_seperation=3)    
+    dfa.show_diagram(test,filename='DFAA',view=True,state_seperation=4)    
    
 
 
