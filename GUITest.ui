@@ -100,6 +100,17 @@
            <height>31</height>
           </size>
          </property>
+         <property name="font">
+          <font>
+           <family>Mongolian Baiti</family>
+           <pointsize>14</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
         </widget>
        </item>
        <item>
@@ -122,13 +133,6 @@
             <layout class="QVBoxLayout" name="verticalLayout_3">
              <item>
               <widget class="QGraphicsView" name="graphicsView"/>
-             </item>
-             <item>
-              <widget class="QPushButton" name="pushButton_3">
-               <property name="text">
-                <string>Next</string>
-               </property>
-              </widget>
              </item>
             </layout>
            </widget>
