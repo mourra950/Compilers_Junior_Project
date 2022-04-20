@@ -34,16 +34,38 @@ def dfafunction(a):
     try:
         b = dfa.read_input_stepwise(a)
     except:
-        print("not valI")
+        print("not valid")
 
-    count = 0
+    
+    # dfa = VisualDFA(dfa)
+    # test=""
+    # for i in a:
+    #     test+=i
+       
+    # dfa.show_diagram(test,filename='DFAA',view=True,state_seperation=3)
+
+
+
+def dfashow(a):
+    dfa = DFA(
+        states={'start', '1', '2', '3', 'dead'},
+        input_symbols={'+', '-', '/', '*', 'I', 'N'},
+        transitions={
+            'start': {'+': 'dead', '-': 'dead', '/': 'dead', '*': 'dead', 'I': '1', 'N': '2'},
+            '1': {'+': '3', '-': '3', '*': '3', '/': '3', 'I': 'dead', 'N': 'dead'},
+            '2': {'+': '3', '-': '3', '*': '3', '/': '3', 'I': 'dead', 'N': 'dead'},
+            '3': {'+': 'dead', '-': 'dead', '/': 'dead', '*': 'dead', 'I': '1', 'N': '2'},
+            'dead': {'+': 'dead', '-': 'dead', '/': 'dead', '*': 'dead', 'I': 'dead', 'N': 'dead'}
+        },
+        initial_state='start',
+        final_states={'1', '2'}
+    )
     dfa = VisualDFA(dfa)
     test=""
     for i in a:
         test+=i
        
-    dfa.show_diagram(test,filename='DFAA',view=True,state_seperation=3)
-    
+    dfa.show_diagram(test,filename='DFAA',view=True,state_seperation=3)    
    
 
 
