@@ -4,6 +4,7 @@ from lex import *
 
 def analizer(input1):
     a = []
+    b = []
 
     lexer = Lexer(input1)
     print(input1)
@@ -21,7 +22,7 @@ def analizer(input1):
             a.append('-')
         if(token.kind == TokenType.DIVIDE):
             a.append('/')
+        b.append(token.text)    
         token = lexer.getToken()
-    print(a)
     dfa.dfafunction(a)
-    return a
+    return a,b
