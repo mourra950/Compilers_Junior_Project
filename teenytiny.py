@@ -25,37 +25,25 @@ def analizer(input1,condition):
         TOkenTextList.append(token.text)    
         token = lexer.getToken()
     counter=0
+    
+    
+    #to check for invalid syntax
     while(counter<len(TOkenTypeList)-1):
+        #check for num and id
         if(TOkenTypeList[counter]=='N' or TOkenTypeList[counter]=='I'):
             if(TOkenTypeList[counter+1]=='N' or TOkenTypeList[counter+1]== 'I'):
                 print(TOkenTypeList[counter+1])
                 return 'Invalid','Invalid'
-        
+        #check for operators 
         if(TOkenTypeList[counter]=='+' or TOkenTypeList[counter]== '-' or TOkenTypeList[counter]=='/' or TOkenTypeList[counter]== '*'):
             if(TOkenTypeList[counter+1]=='+' or TOkenTypeList[counter+1]== '-' or TOkenTypeList[counter+1]=='/' or TOkenTypeList[counter+1]== '*'):
                 return 'Invalid','Invalid'
         counter+=1
     
-    
-    
+
     if(condition=="scan"):
         dfa.dfafunction(TOkenTypeList)
     else:
         dfa.dfashow(TOkenTypeList)
         
-    
-        
-        
-        
-        
-        
     return TOkenTypeList,TOkenTextList
-#  print((token.kind==TokenType.NUM or TokenType.ID) == (TOkenTypeList[-1]==TokenType.NUM or TokenType.ID))
-#         if((token.kind==TokenType.NUM or TokenType.ID) and (TOkenTypeList[-1]==TokenType.NUM or TokenType.ID)):
-#             return"Invalid","Invalid"
-#         else:
-
-#  if((token.kind==TokenType.PLUS or TokenType.ASTERISK or TokenType.MINUS or TokenType.DIVIDE) and(TOkenTypeList[-1] ==TokenType.PLUS or TokenType.ASTERISK or TokenType.MINUS or TokenType.DIVIDE) ):    
-#         return "Invalid","Invalid"
-#     else:
-   
