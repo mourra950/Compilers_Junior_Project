@@ -12,8 +12,6 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QAction, QTableWidget, QTableWidgetItem, QVBoxLayout
 import teenytiny
-
-
 class Ui_MainWindow(object):
     def showDFA(self):
         tokensTable,tokentype=teenytiny.analizer(self.lineEdit.text(),"show")
