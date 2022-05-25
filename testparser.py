@@ -1,7 +1,11 @@
 import teenytiny as t
-import dfa
+
 from lex import *
+from parse import *
 def main():
-    lex , txt=t.analizer('5+4','p')
-    print(lex)
+    lex , txt,token=t.analizer('5+4','scan')
+    print("//////////////////////////////////////////////////////////////////////////////////////////////")
+    P = Parser(token)
+    P.program()
+    
 main()

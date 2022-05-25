@@ -5,11 +5,11 @@ from lex import *
 def analizer(input1,condition):
     TOkenTypeList = []
     TOkenTextList = []
+    
     lexer = Lexer(input1)
     print(input1)
     token = lexer.getToken()
     while token.kind != TokenType.EOF:
-       
         if(token.kind == TokenType.NUM):
             TOkenTypeList.append('N')
         if(token.kind == TokenType.ID):
@@ -46,4 +46,4 @@ def analizer(input1,condition):
     else:
         dfa.dfashow(TOkenTypeList)
         
-    return TOkenTypeList,TOkenTextList
+    return TOkenTypeList,TOkenTextList,Lexer(input1)

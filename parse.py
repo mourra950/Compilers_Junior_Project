@@ -50,36 +50,40 @@ class Parser:
         print("Start")
         # Parse all the expressions in the program.
         while not self.checkToken(TokenType.EOF):
-            print('expression')
             self.expressionTemp()         
     # One of the following statements...
     def expressionTemp(self):
+        print('Expression')
         self.term()
         self.expressionDash()
         self.nextToken()  
     def Addop(self):
+        print('Addop: ',end=' ')
         if self.checkToken(TokenType.MINUS):
-            print("MINUS")
+            print("-")
             self.nextToken()
         elif self.checkToken(TokenType.PLUS):
-            print("PLUS")
+            print("+")
             self.nextToken()
     def expressionDash(self):
+        print('Expressiondash')
         if self.checkToken(TokenType.MINUS) or self.checkToken(TokenType.PLUS):
             self.Addop()
             self.term()
             self.expressionDash()
             self.nextToken()
         else:
-            print("Epsilon")
+            print("ε")
             self.nextToken()
             
     def term (self):
+        print("term ")
         self.factor()
         self.termDash()
-        self.nextToken()
+        # self.nextToken()
           
     def termDash(self):
+        print("termdash")
         if self.checkToken(TokenType.ASTERISK) or self.checkToken(TokenType.DIVIDE):
                 self.mulop()
                 self.factor()
@@ -87,9 +91,10 @@ class Parser:
                 self.nextToken()
                 # Simple string.
         else :
-            print("Epsilon")
-            self.nextToken() 
+            print("ε")
+            
     def factor(self):
+        print('factor')
         if self.checkToken(TokenType.NUM):
             print("number")
             self.nextToken()
@@ -103,10 +108,11 @@ class Parser:
             print(TokenType.CLOSEDBRACKET)
             self.nextToken()
     def Mulop(self):
-         if self.checkToken(TokenType.DIVIDE):
-             print("/")
-             self.nextToken()
-         elif self.checkToken(TokenType.ASTERISK):
+        print('Mulop')
+        if self.checkToken(TokenType.DIVIDE):
+            print("/")
+            self.nextToken()
+        elif self.checkToken(TokenType.ASTERISK):
              print("*")   
              self.nextToken()
 
