@@ -1,1 +1,1 @@
-print(self.counter,'add op 7')
+self.nextToken()

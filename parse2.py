@@ -41,6 +41,8 @@ class Parser:
     # Advances the current token.
     def nextToken(self):
         self.curToken = self.peekToken
+        
+        
         self.peekToken = self.lexer.getToken()
         # No need to worry about passing the EOF, lexer handles that.
 
@@ -58,9 +60,10 @@ class Parser:
     def program(self):
         print("Start")
         self.G.add_edge(str('start'),str(self.counter))
+        
         # Parse all the expressions in the program.
         while not self.checkToken(TokenType.EOF):
-            print('ana hena')
+            
             self.expressionTemp()
     # One of the following statements...
 
@@ -90,6 +93,7 @@ class Parser:
         elif self.checkToken(TokenType.PLUS):
             print("+")
             self.nextToken()
+        
 
     def expressionDash(self):
         temp=self.counter
@@ -109,7 +113,7 @@ class Parser:
             self.G.add_edge(str(temp),str(temp+1))
             print("ε")
             self.counter+=1
-            self.nextToken()
+
 
     def term(self):
         temp=self.counter #1
@@ -130,7 +134,7 @@ class Parser:
         print("termdash")
         self.counter+=1
         if self.checkToken(TokenType.ASTERISK) or self.checkToken(TokenType.DIVIDE):
-            # print('mama 7elwaaaaaaaaaaaaaaaa')
+            
             self.G.add_edge(str(temp),str(temp+1))
            
             self.Mulop()
@@ -143,11 +147,12 @@ class Parser:
             self.termDash()
             # print('pokemon')
             # print(self.counter)
-            self.nextToken()
+            
             # Simple string.
         else:
             self.G.add_edge(str(temp),self.counter)
             print("ε")
+            self.counter+=1
 
     def factor(self):
         print('factor')
@@ -184,7 +189,8 @@ class Parser:
 
 
 def main():
-    lex , txt,token=t.analizer('3+2','scan')
+    lex , txt,token=t.analizer('3+3*3','scan')
+    print(lex)
     print("//////////////////////////////////////////////////////////////////////////////////////////////")
     P = Parser(token)
     P.program()
