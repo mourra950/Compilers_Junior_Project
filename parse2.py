@@ -78,10 +78,10 @@ class Parser:
 
     def Addop(self):
         self.G.add_edge(str(self.counter-1),str(self.counter))
-        print(self.counter,'add op 7')
+        # print(self.counter,'add op 7')
         self.counter+=1
         self.G.add_edge(str(self.counter-1),str(self.counter))
-        print(self.counter,'add op 8')
+        # print(self.counter,'add op 8')
         self.counter+=1
         print('Addop: ', end=' ')
         if self.checkToken(TokenType.MINUS):
@@ -130,12 +130,19 @@ class Parser:
         print("termdash")
         self.counter+=1
         if self.checkToken(TokenType.ASTERISK) or self.checkToken(TokenType.DIVIDE):
+            # print('mama 7elwaaaaaaaaaaaaaaaa')
             self.G.add_edge(str(temp),str(temp+1))
+           
             self.Mulop()
+            
             self.G.add_edge(str(temp),str(self.counter))
+            
             self.factor()
-            self.G.add_edge(str(temp),str(self.counter+1))
+            # print(self.counter)
+            self.G.add_edge(str(temp),str(self.counter))
             self.termDash()
+            # print('pokemon')
+            # print(self.counter)
             self.nextToken()
             # Simple string.
         else:
@@ -162,10 +169,10 @@ class Parser:
     def Mulop(self):
         
         self.G.add_edge(str(self.counter-1),str(self.counter))
-        print(self.counter,'add op 8')
+        # print(self.counter,'add op 8')
         self.counter+=1
         self.G.add_edge(str(self.counter-1),str(self.counter))
-        print(self.counter,'add op 9')
+        # print(self.counter,'add op 9')
         self.counter+=1
         print('Mulop')
         if self.checkToken(TokenType.DIVIDE):
@@ -177,7 +184,7 @@ class Parser:
 
 
 def main():
-    lex , txt,token=t.analizer('3+5','scan')
+    lex , txt,token=t.analizer('3*5+2','scan')
     print("//////////////////////////////////////////////////////////////////////////////////////////////")
     P = Parser(token)
     P.program()
