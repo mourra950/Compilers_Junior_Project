@@ -1,1 +1,0 @@
-      self.pushButton_2.clicked.connect(lambda: self.showDFA())
