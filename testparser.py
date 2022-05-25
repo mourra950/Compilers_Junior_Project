@@ -1,4 +1,6 @@
 import teenytiny as t
+import networkx as nx
+from matplotlib import pyplot as plt
 
 from lex import *
 from parse import *
@@ -7,5 +9,6 @@ def main():
     print("//////////////////////////////////////////////////////////////////////////////////////////////")
     P = Parser(token)
     P.program()
-    
+    nx.draw(nx.topological_sort(P.G),with_labels = True,node_size=100)
+    plt.show()
 main()
