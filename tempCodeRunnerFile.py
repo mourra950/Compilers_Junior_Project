@@ -1,1 +1,1 @@
-self.nextToken()
+self.counter+=1
