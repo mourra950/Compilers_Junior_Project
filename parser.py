@@ -51,86 +51,66 @@ class Parser:
         # Parse all the expressions in the program.
         while not self.checkToken(TokenType.EOF):
             print('expression')
-            self.expressionTemp()
-            self.expressionTempdash()
-
-
+            self.expressionTemp()         
     # One of the following statements...
     def expressionTemp(self):
-        # Check the first token to see what kind of statement this is.
-        
-        # "PRINT" (expression | string)
-        if self.checkToken(TokenType.NUM) or self.checkToken(TokenType.ID):
-            print("Factor")
-            self.nextToken()
-            print("Termdash")
-            if self.checkToken(TokenType.DIVIDE) or self.checkToken(TokenType.ASTERISK):
-                # Simple string.
-                self.nextToken()
-
-            else:
-                print('EPS')
-        # This is not a valid statement. Error!
-        else:
-            self.abort("Invalid statement at " + self.curToken.text + " (" + self.curToken.kind.name + ")")
-
-    # comparison ::= expression (("==" | "!=" | ">" | ">=" | "<" | "<=") expression)+
-    
-
-
-    # expression ::= term {( "-" | "+" ) term}
-    def expression(self):
-        print("EXPRESSION")
-
         self.term()
-        # Can have 0 or more +/- and expressions.
-        while self.checkToken(TokenType.PLUS) or self.checkToken(TokenType.MINUS):
+        self.expressionDash()
+        self.nextToken()  
+    def Addop(self):
+        if self.checkToken(TokenType.MINUS):
+            print("MINUS")
             self.nextToken()
+        elif self.checkToken(TokenType.PLUS):
+            print("PLUS")
+            self.nextToken()
+    def expressionDash(self):
+        if self.checkToken(TokenType.MINUS) or self.checkToken(TokenType.PLUS):
+            self.Addop()
             self.term()
-
-
-    # term ::= unary {( "/" | "*" ) unary}
-    def term(self):
-        print("TERM")
-
-        self.unary()
-        # Can have 0 or more *// and expressions.
-        while self.checkToken(TokenType.ASTERISK) or self.checkToken(TokenType.SLASH):
-            self.nextToken()
-            self.unary()
-
-
-    # unary ::= ["+" | "-"] primary
-    def unary(self):
-        print("UNARY")
-        # Optional unary +/-
-        if self.checkToken(TokenType.PLUS) or self.checkToken(TokenType.MINUS):
-            self.nextToken()        
-        self.primary()
-
-
-    # primary ::= number | ident
-    def primary(self):
-        print("PRIMARY (" + self.curToken.text + ")")
-
-        if self.checkToken(TokenType.NUMBER): 
-            self.nextToken()
-        elif self.checkToken(TokenType.IDENT):
-            # Ensure the variable already exists.
-            if self.curToken.text not in self.symbols:
-                self.abort("Referencing variable before assignment: " + self.curToken.text)
-
+            self.expressionDash()
             self.nextToken()
         else:
-            # Error!
-            self.abort("Unexpected token at " + self.curToken.text)
-
-    # nl ::= '\n'+
-    def nl(self):
-        print("NEWLINE")
-
-        # Require at least one newline.
-        self.match(TokenType.NEWLINE)
-        # But we will allow extra newlines too, of course.
-        while self.checkToken(TokenType.NEWLINE):
+            print("Epsilon")
             self.nextToken()
+            
+    def term (self):
+        self.factor()
+        self.termDash()
+        self.nextToken()
+          
+    def termDash(self):
+        if self.checkToken(TokenType.ASTERISK) or self.checkToken(TokenType.DIVIDE):
+                self.mulop()
+                self.factor()
+                self.termDash()
+                self.nextToken()
+                # Simple string.
+        else :
+            print("Epsilon")
+            self.nextToken() 
+    def factor(self):
+        if self.checkToken(TokenType.NUM):
+            print("number")
+            self.nextToken()
+        elif self.checkToken(TokenType.ID):
+            print("identifier")
+            self.nextToken()
+        elif self.checkToken(TokenType.OPENBRACKET):
+            print(TokenType.OPENBRACKET)
+            self.nextToken()
+            self.expressionTemp()
+            print(TokenType.CLOSEDBRACKET)
+            self.nextToken()
+    def Mulop(self):
+         if self.checkToken(TokenType.DIVIDE):
+             print("/")
+             self.nextToken()
+         elif self.checkToken(TokenType.ASTERISK):
+             print("*")   
+             self.nextToken()
+
+             
+            
+                
+   
