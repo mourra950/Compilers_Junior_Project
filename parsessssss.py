@@ -10,7 +10,7 @@ from matplotlib import pyplot as plt
 
 class Parser:
     def __init__(self, lexer):
-        self.counter = 0
+        self.counter = 1
         self.lexer = lexer
         self.G = nx.DiGraph()
         self.symbols = set()    # All variables we have declared so far.
@@ -57,31 +57,111 @@ class Parser:
 
     def program(self):
         print("Start")
-        self.G.add_edge(str('start'),str(self.counter))
+        self.G.add_edge(str('start'), str(self.counter))
         # Parse all the expressions in the program.
         while not self.checkToken(TokenType.EOF):
-            print('ana hena')
             self.expressionTemp()
     # One of the following statements...
 
     def expressionTemp(self):
-        temp=self.counter
+        temp = self.counter
         print('Expression')
-        self.G.add_edge(str(temp),str(temp+1))
-        self.counter +=1
+        self.G.add_edge(str(temp), str(temp+1))
+        self.counter += 1
         self.term()
-        self.counter+=1
-        self.G.add_edge(str(temp),str(self.counter))
-        
+        self.counter += 1
+        self.G.add_edge(str(temp), str(self.counter))
+
         self.expressionDash()
         self.nextToken()
 
+    def term(self):
+        temp = self.counter  # 1
+
+        print("term ")
+
+        self.G.add_edge(str(temp), str(temp+1))
+        self.counter += 1  # 2
+        self.factor()
+        
+        # /////////////
+        self.G.add_edge(str(temp), str(self.counter))
+
+        self.termDash()
+        # self.nextToken()
+
+    def expressionDash(self):
+        temp = self.counter
+
+        print('Expressiondash')
+        self.counter += 1
+        if self.checkToken(TokenType.MINUS) or self.checkToken(TokenType.PLUS):
+            self.G.add_edge(str(temp), str(temp+1))
+            self.Addop()
+            self.G.add_edge(str(temp), str(self.counter))
+            self.term()
+            self.G.add_edge(str(temp), str(self.counter+1))
+            self.counter += 1
+            self.expressionDash()
+            self.nextToken()
+        else:
+            self.counter += 1
+            self.G.add_edge(str(temp), str(self.counter))
+            print("ε")
+
+            self.nextToken()
+
+    def termDash(self):
+        temp = self.counter  # 4
+        print("termdash")
+
+        if self.checkToken(TokenType.ASTERISK) or self.checkToken(TokenType.DIVIDE):
+            self.G.add_edge(str(temp), str(temp+1))
+            self.Mulop()
+            self.counter += 1
+            self.G.add_edge(str(temp), str(self.counter))
+            self.factor()
+            self.G.add_edge(str(temp), str(self.counter+1))
+            self.counter += 1
+            self.termDash()
+            self.nextToken()
+            # Simple string.
+        else:
+
+            self.G.add_edge(str(temp), self.counter+1)
+            print("ε")
+            self.counter += 1
+            self.nextToken()
+
+    def factor(self):
+        print('factor')
+        
+        self.G.add_edge(str(self.counter), str(self.counter+1))
+        self.counter += 2  # 4
+        if self.checkToken(TokenType.NUM):
+            print("number")
+            self.nextToken()
+        elif self.checkToken(TokenType.ID):
+            print("identifier")
+            self.nextToken()
+            
+            
+            
+        elif self.checkToken(TokenType.OPENBRACKET):
+            print(TokenType.OPENBRACKET)
+            self.nextToken()
+            self.expressionTemp()
+            print(TokenType.CLOSEDBRACKET)
+            self.nextToken()
+
     def Addop(self):
-        self.G.add_edge(str(self.counter),str(self.counter+1))
-        print(self.counter,'add op 7')
-        self.G.add_edge(str(self.counter),str(self.counter+1))
-        print(self.counter,'add op 8')
-        self.counter+=2
+        
+        self.G.add_edge(str(self.counter), str(self.counter+1))
+        self.counter += 1
+        
+        self.G.add_edge(str(self.counter), str(self.counter+1))
+        self.counter += 1
+        
         print('Addop: ', end=' ')
         if self.checkToken(TokenType.MINUS):
             print("-")
@@ -90,73 +170,12 @@ class Parser:
             print("+")
             self.nextToken()
 
-    def expressionDash(self):
-        temp=self.counter
-        
-        print('Expressiondash')
-        self.counter+=1
-        if self.checkToken(TokenType.MINUS) or self.checkToken(TokenType.PLUS):
-            self.G.add_edge(str(temp),str(temp+1))
-            self.Addop()
-            self.G.add_edge(str(temp),str(self.counter))
-            self.term()
-            self.G.add_edge(str(temp),str(self.counter+1))
-            self.counter+=1
-            self.expressionDash()
-            self.nextToken()
-        else:
-            self.G.add_edge(str(temp),str(temp+1))
-            print("ε")
-            self.counter+=1
-            self.nextToken()
-
-    def term(self):
-        temp=self.counter #1
-        
-        print("term ")
-        
-        self.G.add_edge(str(temp),str(temp+1))
-        self.counter+=1 #2
-        self.factor()
-        #/////////////
-        self.G.add_edge(str(temp),str(self.counter))
-        
-        self.termDash()
-        # self.nextToken()
-
-    def termDash(self):
-        temp=self.counter #4
-        print("termdash")
-        self.counter+=1
-        if self.checkToken(TokenType.ASTERISK) or self.checkToken(TokenType.DIVIDE):
-            self.mulop()
-            self.factor()
-            self.termDash()
-            self.nextToken()
-            # Simple string.
-        else:
-            self.G.add_edge(str(temp),self.counter)
-            print("ε")
-
-    def factor(self):
-        print('factor')
-        self.G.add_edge(str(self.counter),str(self.counter+1))
-        self.counter+=2 #4
-        if self.checkToken(TokenType.NUM):
-            print("number")
-            self.nextToken()
-        elif self.checkToken(TokenType.ID):
-            print("identifier")
-            self.nextToken()
-        elif self.checkToken(TokenType.OPENBRACKET):
-            print(TokenType.OPENBRACKET)
-            self.nextToken()
-            self.expressionTemp()
-            print(TokenType.CLOSEDBRACKET)
-            self.nextToken()
-
     def Mulop(self):
-        print('Mulop')
+        self.G.add_edge(str(self.counter), str(self.counter+1))
+        self.counter += 1
+        self.G.add_edge(str(self.counter), str(self.counter+1))
+        self.counter += 1
+        print('Mulop :', end=' ')
         if self.checkToken(TokenType.DIVIDE):
             print("/")
             self.nextToken()
@@ -166,10 +185,12 @@ class Parser:
 
 
 def main():
-    lex , txt,token=t.analizer('3-5','scan')
+    lex, txt, token = t.analizer('3*5', 'scan')
     print("//////////////////////////////////////////////////////////////////////////////////////////////")
     P = Parser(token)
     P.program()
-    nx.draw_shell(P.G,with_labels = True,node_size=100)
+    nx.draw_shell(P.G, with_labels=True, node_size=100)
     plt.show()
+
+
 main()

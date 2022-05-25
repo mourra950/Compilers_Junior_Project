@@ -1,1 +1,1 @@
-self.counter+=1
+self.counter += 1
