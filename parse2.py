@@ -114,7 +114,7 @@ class Parser:
     def term(self):
         temp=self.counter #1
         
-        print("term ")
+        print("Term ")
         
         self.G.add_edge(str(temp),str(temp+1))
         self.counter+=1 #2
@@ -130,8 +130,11 @@ class Parser:
         print("termdash")
         self.counter+=1
         if self.checkToken(TokenType.ASTERISK) or self.checkToken(TokenType.DIVIDE):
-            self.mulop()
+            self.G.add_edge(str(temp),str(temp+1))
+            self.Mulop()
+            self.G.add_edge(str(temp),str(self.counter))
             self.factor()
+            self.G.add_edge(str(temp),str(self.counter+1))
             self.termDash()
             self.nextToken()
             # Simple string.
@@ -158,6 +161,12 @@ class Parser:
 
     def Mulop(self):
         
+        self.G.add_edge(str(self.counter-1),str(self.counter))
+        print(self.counter,'add op 8')
+        self.counter+=1
+        self.G.add_edge(str(self.counter-1),str(self.counter))
+        print(self.counter,'add op 9')
+        self.counter+=1
         print('Mulop')
         if self.checkToken(TokenType.DIVIDE):
             print("/")
@@ -168,7 +177,7 @@ class Parser:
 
 
 def main():
-    lex , txt,token=t.analizer('3-5','scan')
+    lex , txt,token=t.analizer('3+5','scan')
     print("//////////////////////////////////////////////////////////////////////////////////////////////")
     P = Parser(token)
     P.program()

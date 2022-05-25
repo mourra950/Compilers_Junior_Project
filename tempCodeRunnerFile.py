@@ -1,1 +1,1 @@
-self.counter += 1
+print(self.counter,'add op 7')
