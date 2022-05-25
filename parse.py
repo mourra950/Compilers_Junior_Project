@@ -1,12 +1,15 @@
 import sys
+
+from sympy import root
 from lex import *
 import networkx as nx
 import teenytiny as t
 import networkx as nx
 from matplotlib import pyplot as plt
 
-# Parser object keeps track of current token and checks if the code matches the grammar.
 
+# Parser object keeps track of current token and checks if the code matches the grammar.
+g=nx.Graph()
 
 class Parser:
     def __init__(self, lexer):
@@ -166,7 +169,13 @@ class Parser:
             print("*")
             self.nextToken()
 
-
+    def syntaxTree(self):
+        global counter
+        temp=[]
+        temp=self.counter 
+        if self.checkToken(TokenType.ASTERISK) or self.checkToken(TokenType.DIVIDE) or self.checkToken(TokenType.PLUS) or self.checkToken(TokenType.MINUS):
+            g.add_node()
+            
 def main():
     lex , txt,token=t.analizer('3-5','scan')
     print("//////////////////////////////////////////////////////////////////////////////////////////////")
