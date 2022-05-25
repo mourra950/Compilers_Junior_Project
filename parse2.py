@@ -72,10 +72,8 @@ class Parser:
         self.term()
         self.counter+=1
         self.G.add_edge(str(temp),str(self.counter))
-        print('mmaaaaaaaaaaaaaamaa')
-        print(self.curToken.kind)
+        
         self.expressionDash()
-        print('mmaaaaaaaaaaaaaamaa')
         self.nextToken()
 
     def Addop(self):
@@ -125,7 +123,7 @@ class Parser:
         self.G.add_edge(str(temp),str(self.counter))
         
         self.termDash()
-        self.nextToken()
+        # self.nextToken()
 
     def termDash(self):
         temp=self.counter #4
@@ -186,7 +184,7 @@ class Parser:
 
 
 def main():
-    lex , txt,token=t.analizer('3*2+2','scan')
+    lex , txt,token=t.analizer('3*5+2','scan')
     print("//////////////////////////////////////////////////////////////////////////////////////////////")
     P = Parser(token)
     P.program()
