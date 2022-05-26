@@ -106,12 +106,7 @@ class Parser:
         elif self.checkToken(TokenType.PLUS):
             print("+")
             self.nextToken()
-<<<<<<< Updated upstream
-        
-
-=======
        
->>>>>>> Stashed changes
     def expressionDash(self):
         temp=self.counter
         
