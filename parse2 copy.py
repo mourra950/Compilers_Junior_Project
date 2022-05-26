@@ -202,8 +202,9 @@ class Parser:
             self.expressionTemp()
             
             self.nextToken()
-            self.lis.append('CL')
             print(')')
+            self.lis.append('CL')
+         
             self.nextToken()
             
         # elif self.checkToken(TokenType.CLOSEDBRACKET):
@@ -275,6 +276,6 @@ def parserTree(input):
     PnDraw.drawparsingtree(txt)
     
     
-parserTree('3*3+x')
+parserTree('(3+x)*3')
 
 
