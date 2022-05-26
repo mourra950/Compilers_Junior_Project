@@ -1,4 +1,4 @@
-from cProfile import label
+import nltk2 as PnDraw
 import sys
 from lex import *
 import networkx as nx
@@ -65,7 +65,7 @@ class Parser:
         
         # Parse all the expressions in the program.
         while not self.checkToken(TokenType.EOF):
-            
+            self.lis.append('(')
             self.expressionTemp()
     # One of the following statements...
 
@@ -73,6 +73,7 @@ class Parser:
         temp=self.counter
         
         self.lis.append('Expression')
+        self.lis.append('(')
         print('Expression')
         self.G.add_edge(str(temp),str(temp+1))
         self.counter +=1
@@ -81,7 +82,9 @@ class Parser:
         self.G.add_edge(str(temp),str(self.counter))
         
         self.expressionDash()
+        
         self.nextToken()
+        
 
     def Addop(self):
         self.G.add_edge(str(self.counter-1),str(self.counter))
@@ -90,14 +93,17 @@ class Parser:
         self.G.add_edge(str(self.counter-1),str(self.counter))
         # print(self.counter,'add op 8')
         self.counter+=1
+        self.lis.append('(')
         self.lis.append('addop')
         print('Addop: ')
         if self.checkToken(TokenType.MINUS):
             self.lis.append('-')
             print("-")
+            self.lis.append(')')
             self.nextToken()
         elif self.checkToken(TokenType.PLUS):
             self.lis.append('+')
+            self.lis.append(')')
             print("+")
             self.nextToken()
         
@@ -106,6 +112,7 @@ class Parser:
         temp=self.counter
         
         print('Expressiondash')
+        self.lis.append('(')
         self.lis.append('Expressiondash')
         self.counter+=1
         if self.checkToken(TokenType.MINUS) or self.checkToken(TokenType.PLUS):
@@ -117,9 +124,11 @@ class Parser:
             self.counter+=1
             self.expressionDash()
             self.nextToken()
+            self.lis.append(')')
         else:
             self.G.add_edge(str(temp),str(temp+1))
             self.lis.append('ε')
+            self.lis.append(')')
             print("ε")
             self.counter+=1
 
@@ -128,7 +137,9 @@ class Parser:
         temp=self.counter #1
         
         print("Term ")
+        self.lis.append('(')
         self.lis.append('Term')
+        
         self.G.add_edge(str(temp),str(temp+1))
         self.counter+=1 #2
         self.factor()
@@ -136,11 +147,13 @@ class Parser:
         self.G.add_edge(str(temp),str(self.counter))
         
         self.termDash()
+        self.lis.append(')')
         # self.nextToken()
 
     def termDash(self):
         temp=self.counter #4
         print("termdash")
+        self.lis.append('(')
         self.lis.append('termdash')
         self.counter+=1
         if self.checkToken(TokenType.ASTERISK) or self.checkToken(TokenType.DIVIDE):
@@ -155,6 +168,7 @@ class Parser:
             # print(self.counter)
             self.G.add_edge(str(temp),str(self.counter))
             self.termDash()
+            self.lis.append(')')
             # print('pokemon')
             # print(self.counter)
             
@@ -163,10 +177,12 @@ class Parser:
             self.G.add_edge(str(temp),self.counter)
             print("ε")
             self.lis.append('ε')
+            self.lis.append(')')
             self.counter+=1
 
     def factor(self):
         print('factor')
+        self.lis.append('(')
         self.lis.append('factor')
         self.G.add_edge(str(self.counter),str(self.counter+1))
         self.counter+=2 #4
@@ -174,10 +190,12 @@ class Parser:
             
             self.lis.append('number')
             print("number")
+            self.lis.append(')')
             self.nextToken()
         elif self.checkToken(TokenType.ID):
             print("identifier")
             self.lis.append('identifier')
+            self.lis.append(')')
             self.nextToken()
         elif self.checkToken(TokenType.OPENBRACKET):
             print(TokenType.OPENBRACKET)
@@ -194,43 +212,55 @@ class Parser:
         self.G.add_edge(str(self.counter-1),str(self.counter))
         # print(self.counter,'add op 9')
         self.counter+=1
+        
         print('Mulop')
+        self.lis.append('(')
         self.lis.append('mulop')
         if self.checkToken(TokenType.DIVIDE):
             self.lis.append('/')
             print("/")
+            self.lis.append(')')
             self.nextToken()
         elif self.checkToken(TokenType.ASTERISK):
             print("*")
             self.lis.append('*')
+            self.lis.append(')')
             self.nextToken()
 
 
 def main():
     g=nx.Graph()
-    lex , txt,token=t.analizer('3','scan')
+    lex , txt,token=t.analizer('3*3-3+3*3-3','scan')
     lex = list(lex)
     print("//////////////////////////////////////////////////////////////////////////////////////////////")
     P = Parser(token)
     P.program()
-    terminals=['ε','number','+','-','*','/','identifier']
-    nonterminals=['Term','factor','termdash','Expression','Expressiondash','addop','mulop']
+    terminals=['number','identifier','ε']
+    nonterminals=['Term','termdash','Expression','Expressiondash','addop']
     print('#########################################')
-    buff=''
+    buff='('
     tc = 0
     j = 0
     for i in P.lis:
+        if i in terminals:
+            buff+=str(i)+' '
+            buff+=  ')'+' '
+            if i =='ε':
+                buff+=')'+' '
         if i in nonterminals:
-            buff+=str(' ( ')
-            buff+=str( i )
-            tc+=1
-        elif i in terminals:
-            buff += str(' ')
-            buff+=str(i)
-            buff+=str(' ) ')
-            j+=2
-    print(tc,j)
-    print(buff)
+            buff+='('+' '
+            buff+=str(i)+' '
+                
+                
+        # if i in nonterminals:
+        #     print('(')
+        #     buff+=str('(')
+        # if i in terminals:
+        #     buff+=str(')')
+    txt=' '.join(P.lis)+')))'
+    PnDraw.drawparsingtree(txt)
+    
+    
 main()
 
 
