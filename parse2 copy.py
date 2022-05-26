@@ -242,6 +242,7 @@ def parserTree(input):
     P = Parser(token)
     P.program()
     terminals=['number','identifier','ε','+','-','/','*']
+    tls=['+','-','/','*']
     nonterminals=['Term','termdash','Expression','Expressiondash','addop']
     print('#########################################')
     buff='('
@@ -268,10 +269,32 @@ def parserTree(input):
         # if i in terminals:
         #     buff+=str(')')
     txt=' '.join(P.lis)+')))'
-    print(txt)
+    # print(txt)
+    index=-1
+    indexm=0
+    min=200
+    signs=[]
+    levels=[]
+    level=-1
+    for i in P.lis:
+        if i =='(':
+            level+=1
+        elif i==')':
+            level-=1
+        if i in tls:
+            index+=1
+            signs.append(i)
+            print(i,' level: ',level)
+            levels.append(level)
+            if min>level:
+                indexm=index
+                min=level
+    print('root',signs[indexm])
+    print(index)
     PnDraw.drawparsingtree(txt)
     
     
-parserTree('3+3')
+    
+parserTree('3*5+3*4-3')
 
 
