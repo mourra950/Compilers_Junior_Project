@@ -11,9 +11,8 @@ from matplotlib import pyplot as plt
 
 class Parser:
     def __init__(self, lexer):
+        self.lis=list('(')
         self.counter = 0
-        self.countert = 0
-        self.Gt = nx.DiGraph()
         self.lexer = lexer
         self.G = nx.DiGraph()
         self.symbols = set()    # All variables we have declared so far.
@@ -72,7 +71,8 @@ class Parser:
 
     def expressionTemp(self):
         temp=self.counter
-        temp=self.countert
+        
+        self.lis.append('Expression')
         print('Expression')
         self.G.add_edge(str(temp),str(temp+1))
         self.counter +=1
@@ -84,19 +84,20 @@ class Parser:
         self.nextToken()
 
     def Addop(self):
-        self.Gt.add_edge(str(self.countert),str(self.countert+1))
-        self.countert+=1
         self.G.add_edge(str(self.counter-1),str(self.counter))
         # print(self.counter,'add op 7')
         self.counter+=1
         self.G.add_edge(str(self.counter-1),str(self.counter))
         # print(self.counter,'add op 8')
         self.counter+=1
-        print('Addop: ', end=' ')
+        self.lis.append('addop')
+        print('Addop: ')
         if self.checkToken(TokenType.MINUS):
+            self.lis.append('-')
             print("-")
             self.nextToken()
         elif self.checkToken(TokenType.PLUS):
+            self.lis.append('+')
             print("+")
             self.nextToken()
         
@@ -105,6 +106,7 @@ class Parser:
         temp=self.counter
         
         print('Expressiondash')
+        self.lis.append('Expressiondash')
         self.counter+=1
         if self.checkToken(TokenType.MINUS) or self.checkToken(TokenType.PLUS):
             self.G.add_edge(str(temp),str(temp+1))
@@ -117,6 +119,7 @@ class Parser:
             self.nextToken()
         else:
             self.G.add_edge(str(temp),str(temp+1))
+            self.lis.append('ε')
             print("ε")
             self.counter+=1
 
@@ -125,7 +128,7 @@ class Parser:
         temp=self.counter #1
         
         print("Term ")
-        
+        self.lis.append('Term')
         self.G.add_edge(str(temp),str(temp+1))
         self.counter+=1 #2
         self.factor()
@@ -138,6 +141,7 @@ class Parser:
     def termDash(self):
         temp=self.counter #4
         print("termdash")
+        self.lis.append('termdash')
         self.counter+=1
         if self.checkToken(TokenType.ASTERISK) or self.checkToken(TokenType.DIVIDE):
             
@@ -158,18 +162,22 @@ class Parser:
         else:
             self.G.add_edge(str(temp),self.counter)
             print("ε")
+            self.lis.append('ε')
             self.counter+=1
 
     def factor(self):
         print('factor')
+        self.lis.append('factor')
         self.G.add_edge(str(self.counter),str(self.counter+1))
         self.counter+=2 #4
         if self.checkToken(TokenType.NUM):
-            self.Gt.add_edge(self.countert,self.countert+1)
+            
+            self.lis.append('number')
             print("number")
             self.nextToken()
         elif self.checkToken(TokenType.ID):
             print("identifier")
+            self.lis.append('identifier')
             self.nextToken()
         elif self.checkToken(TokenType.OPENBRACKET):
             print(TokenType.OPENBRACKET)
@@ -179,8 +187,7 @@ class Parser:
             self.nextToken()
 
     def Mulop(self):
-        self.Gt.add_edge(str(self.countert),str(self.countert+1))
-        self.countert+=1
+        
         self.G.add_edge(str(self.counter-1),str(self.counter))
         # print(self.counter,'add op 8')
         self.counter+=1
@@ -188,28 +195,42 @@ class Parser:
         # print(self.counter,'add op 9')
         self.counter+=1
         print('Mulop')
+        self.lis.append('mulop')
         if self.checkToken(TokenType.DIVIDE):
+            self.lis.append('/')
             print("/")
             self.nextToken()
         elif self.checkToken(TokenType.ASTERISK):
             print("*")
+            self.lis.append('*')
             self.nextToken()
 
 
 def main():
     g=nx.Graph()
     lex , txt,token=t.analizer('3','scan')
-    lex=list(lex)
-    index=1
-    
-    g.add_edge(index,index+1)
-    g.add_edge(index+1,index+2)
-    
+    lex = list(lex)
     print("//////////////////////////////////////////////////////////////////////////////////////////////")
     P = Parser(token)
     P.program()
-    nx.draw_shell(g,with_labels = True,node_size=100)
-    plt.show()
+    terminals=['ε','number','+','-','*','/','identifier']
+    nonterminals=['Term','factor','termdash','Expression','Expressiondash','addop','mulop']
+    print('#########################################')
+    buff=''
+    tc = 0
+    j = 0
+    for i in P.lis:
+        if i in nonterminals:
+            buff+=str(' ( ')
+            buff+=str( i )
+            tc+=1
+        elif i in terminals:
+            buff += str(' ')
+            buff+=str(i)
+            buff+=str(' ) ')
+            j+=2
+    print(tc,j)
+    print(buff)
 main()
 
 
