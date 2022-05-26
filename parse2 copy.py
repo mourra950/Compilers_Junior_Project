@@ -1,3 +1,4 @@
+from email import parser
 import nltk2 as PnDraw
 import sys
 from lex import *
@@ -70,20 +71,15 @@ class Parser:
     # One of the following statements...
 
     def expressionTemp(self):
-        temp=self.counter
-        
         self.lis.append('Expression')
         self.lis.append('(')
-        print('Expression')
-        self.G.add_edge(str(temp),str(temp+1))
-        self.counter +=1
+        print('Expression')        
         self.term()
-        self.counter+=1
-        self.G.add_edge(str(temp),str(self.counter))
         
         self.expressionDash()
         
-        self.nextToken()
+        
+        
         
 
     def Addop(self):
@@ -134,17 +130,16 @@ class Parser:
 
 
     def term(self):
-        temp=self.counter #1
+        
         
         print("Term ")
         self.lis.append('(')
         self.lis.append('Term')
         
-        self.G.add_edge(str(temp),str(temp+1))
-        self.counter+=1 #2
+     
         self.factor()
         #/////////////
-        self.G.add_edge(str(temp),str(self.counter))
+        
         
         self.termDash()
         self.lis.append(')')
@@ -182,10 +177,10 @@ class Parser:
 
     def factor(self):
         print('factor')
+        
         self.lis.append('(')
         self.lis.append('factor')
-        self.G.add_edge(str(self.counter),str(self.counter+1))
-        self.counter+=2 #4
+        
         if self.checkToken(TokenType.NUM):
             
             self.lis.append('number')
@@ -199,8 +194,19 @@ class Parser:
             self.nextToken()
         elif self.checkToken(TokenType.OPENBRACKET):
             print('(')
+            self.lis.append('OB')
+            print(self.curToken.kind)
             self.nextToken()
+            
             self.expressionTemp()
+            
+            self.nextToken()
+            self.lis.append('CL')
+            print(')')
+            self.nextToken()
+            
+        elif self.checkToken(TokenType.CLOSEDBRACKET):
+            
             print(')')
             self.nextToken()
 
@@ -230,7 +236,8 @@ class Parser:
 def parserTree(input):
     g=nx.Graph()
     lex , txt,token=t.analizer(input,'scan')
-    lex = list(lex)
+    lext = list(txt)
+    print(lext)
     print("//////////////////////////////////////////////////////////////////////////////////////////////")
     P = Parser(token)
     P.program()
@@ -261,9 +268,10 @@ def parserTree(input):
         # if i in terminals:
         #     buff+=str(')')
     txt=' '.join(P.lis)+')))'
-    PnDraw.drawparsingtree(txt)
     print(txt)
+    PnDraw.drawparsingtree(txt)
     
-
+    
+parserTree('3+3')
 
 

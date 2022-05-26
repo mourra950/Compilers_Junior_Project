@@ -12,6 +12,10 @@ def analizer(input1,condition):
     while token.kind != TokenType.EOF:
         if(token.kind == TokenType.NUM):
             TOkenTypeList.append('N')
+        if(token.kind == TokenType.CLOSEDBRACKET):
+            TOkenTypeList.append(')')
+        if(token.kind == TokenType.OPENBRACKET):
+            TOkenTypeList.append('(')
         if(token.kind == TokenType.ID):
             TOkenTypeList.append('I')       
         if(token.kind == TokenType.PLUS):
