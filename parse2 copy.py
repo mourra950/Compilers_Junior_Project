@@ -178,24 +178,25 @@ class Parser:
     def factor(self):
         print('factor')
         
-        self.lis.append('(')
+        #self.lis.append('(')
         self.lis.append('factor')
         
         if self.checkToken(TokenType.NUM):
             
             self.lis.append('number')
             print("number")
-            self.lis.append(')')
+            #self.lis.append(')')
             self.nextToken()
         elif self.checkToken(TokenType.ID):
             print("identifier")
             self.lis.append('identifier')
-            self.lis.append(')')
+            #self.lis.append(')')
             self.nextToken()
         elif self.checkToken(TokenType.OPENBRACKET):
+            #self.lis.append('(')
             print('(')
             self.lis.append('OB')
-            print(self.curToken.kind)
+            #print(self.curToken.kind)
             self.nextToken()
             
             self.expressionTemp()
@@ -205,10 +206,12 @@ class Parser:
             print(')')
             self.nextToken()
             
-        elif self.checkToken(TokenType.CLOSEDBRACKET):
+        # elif self.checkToken(TokenType.CLOSEDBRACKET):
             
-            print(')')
-            self.nextToken()
+            #self.lis.append(')')
+            #print(')')
+            #self.lis.append('CL')
+            #self.nextToken()
 
     def Mulop(self):
         
@@ -272,6 +275,6 @@ def parserTree(input):
     PnDraw.drawparsingtree(txt)
     
     
-parserTree('3+3')
+parserTree('3*(3+x)')
 
 

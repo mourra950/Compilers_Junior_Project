@@ -79,15 +79,14 @@ class Parser:
         self.term()
         self.counter+=1
         self.G.add_edge(str(temp),str(self.counter))
-<<<<<<< Updated upstream
-        
+
         self.expressionDash()
-=======
+
         #print('mmaaaaaaaaaaaaaamaa')
         print(self.curToken.kind)
         self.expressionDash()
         #print('mmaaaaaaaaaaaaaamaa')
->>>>>>> Stashed changes
+
         self.nextToken()
 
     def Addop(self):
@@ -126,13 +125,10 @@ class Parser:
             self.G.add_edge(str(temp),str(temp+1))
             print("ε")
             self.counter+=1
-<<<<<<< Updated upstream
 
-
-=======
             self.nextToken()
        
->>>>>>> Stashed changes
+
     def term(self):
         temp=self.counter #1
         
@@ -170,11 +166,10 @@ class Parser:
         else:
             self.G.add_edge(str(temp),self.counter)
             print("ε")
-<<<<<<< Updated upstream
+
             self.counter+=1
-=======
             self.nextToken()    
->>>>>>> Stashed changes
+
 
     def factor(self):
         print('factor')
