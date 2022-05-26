@@ -65,9 +65,9 @@ class Parser:
         self.G.add_edge(str('start'),str(self.counter))
         
         # Parse all the expressions in the program.
-        while not self.checkToken(TokenType.EOF):
-            self.lis.append('(')
-            self.expressionTemp()
+       
+        self.lis.append('(')
+        self.expressionTemp()
     # One of the following statements...
 
     def expressionTemp(self):
@@ -178,34 +178,39 @@ class Parser:
     def factor(self):
         print('factor')
         
-        #self.lis.append('(')
+        self.lis.append('(')
         self.lis.append('factor')
         
         if self.checkToken(TokenType.NUM):
             
             self.lis.append('number')
             print("number")
-            #self.lis.append(')')
+            self.lis.append(')')
             self.nextToken()
         elif self.checkToken(TokenType.ID):
             print("identifier")
             self.lis.append('identifier')
-            #self.lis.append(')')
+            self.lis.append(')')
             self.nextToken()
         elif self.checkToken(TokenType.OPENBRACKET):
             #self.lis.append('(')
             print('(')
+            
             self.lis.append('OB')
+            self.lis.append('(')
             #print(self.curToken.kind)
             self.nextToken()
             
             self.expressionTemp()
             
-            self.nextToken()
             print(')')
+            print('CL')
+            self.lis.append(')')
+            self.lis.append(')')
             self.lis.append('CL')
-         
-            self.nextToken()
+            
+            self.lis.append(')')
+            
             
         # elif self.checkToken(TokenType.CLOSEDBRACKET):
             
@@ -276,6 +281,6 @@ def parserTree(input):
     PnDraw.drawparsingtree(txt)
     
     
-parserTree('(3+x)*3')
+parserTree('3*(4-5*6)')
 
 
