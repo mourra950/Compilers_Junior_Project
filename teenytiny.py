@@ -5,7 +5,8 @@ from lex import *
 def analizer(input1,condition):
     TOkenTypeList = []
     TOkenTextList = []
-    
+    openBracket=0
+    closedBracket=0
     lexer = Lexer(input1)
     print(input1)
     token = lexer.getToken()
@@ -14,8 +15,10 @@ def analizer(input1,condition):
             TOkenTypeList.append('N')
         if(token.kind == TokenType.CLOSEDBRACKET):
             TOkenTypeList.append(')')
+            closedBracket+=1
         if(token.kind == TokenType.OPENBRACKET):
             TOkenTypeList.append('(')
+            openBracket+=1
         if(token.kind == TokenType.ID):
             TOkenTypeList.append('I')       
         if(token.kind == TokenType.PLUS):
@@ -29,19 +32,29 @@ def analizer(input1,condition):
         TOkenTextList.append(token.text)    
         token = lexer.getToken()
     counter=0
-    
+    print(closedBracket)
+    print(openBracket)
+    if(closedBracket!=openBracket):
+        print('ana hena')
+        return 'Invalid','Invalid','Invalid'
     
     #to check for invalid syntax
     while(counter<len(TOkenTypeList)-1):
         #check for num and id
+        if(TOkenTypeList[counter]=='(' ):
+            if(TOkenTypeList[counter+1]==')' or TOkenTypeList[counter+1]=='+' or TOkenTypeList[counter+1]== '-' or TOkenTypeList[counter+1]=='/' or TOkenTypeList[counter+1]== '*'):
+                print(TOkenTypeList[counter+1])
+                print('mama')
+                return 'Invalid','Invalid','Invalid'
         if(TOkenTypeList[counter]=='N' or TOkenTypeList[counter]=='I'):
             if(TOkenTypeList[counter+1]=='N' or TOkenTypeList[counter+1]== 'I'):
                 print(TOkenTypeList[counter+1])
-                return 'Invalid','Invalid'
+                print('7elwa')
+                return 'Invalid','Invalid','Invalid'
         #check for operators 
         if(TOkenTypeList[counter]=='+' or TOkenTypeList[counter]== '-' or TOkenTypeList[counter]=='/' or TOkenTypeList[counter]== '*'):
             if(TOkenTypeList[counter+1]=='+' or TOkenTypeList[counter+1]== '-' or TOkenTypeList[counter+1]=='/' or TOkenTypeList[counter+1]== '*'):
-                return 'Invalid','Invalid'
+                return 'Invalid','Invalid','Invalid'
         counter+=1
     
 

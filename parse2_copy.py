@@ -281,6 +281,6 @@ def parserTree(input):
     PnDraw.drawparsingtree(txt)
     
     
-parserTree('3*(4-5*6)')
+
 
 
