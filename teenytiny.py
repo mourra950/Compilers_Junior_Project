@@ -8,7 +8,7 @@ def analizer(input1,condition):
     openBracket=0
     closedBracket=0
     lexer = Lexer(input1)
-    print(input1)
+    
     token = lexer.getToken()
     while token.kind != TokenType.EOF:
         if(token.kind == TokenType.NUM):
@@ -32,10 +32,9 @@ def analizer(input1,condition):
         TOkenTextList.append(token.text)    
         token = lexer.getToken()
     counter=0
-    print(closedBracket)
-    print(openBracket)
+   
     if(closedBracket!=openBracket):
-        print('ana hena')
+        
         return 'Invalid','Invalid','Invalid'
     
     #to check for invalid syntax
@@ -44,12 +43,12 @@ def analizer(input1,condition):
         if(TOkenTypeList[counter]=='(' ):
             if(TOkenTypeList[counter+1]==')' or TOkenTypeList[counter+1]=='+' or TOkenTypeList[counter+1]== '-' or TOkenTypeList[counter+1]=='/' or TOkenTypeList[counter+1]== '*'):
                 print(TOkenTypeList[counter+1])
-                print('mama')
+                
                 return 'Invalid','Invalid','Invalid'
         if(TOkenTypeList[counter]=='N' or TOkenTypeList[counter]=='I'):
             if(TOkenTypeList[counter+1]=='N' or TOkenTypeList[counter+1]== 'I'):
                 print(TOkenTypeList[counter+1])
-                print('7elwa')
+                
                 return 'Invalid','Invalid','Invalid'
         #check for operators 
         if(TOkenTypeList[counter]=='+' or TOkenTypeList[counter]== '-' or TOkenTypeList[counter]=='/' or TOkenTypeList[counter]== '*'):
@@ -58,9 +57,9 @@ def analizer(input1,condition):
         counter+=1
     
 
-    if(condition=="scan"):
-        dfa.dfafunction(TOkenTypeList)
-    else:
-        dfa.dfashow(TOkenTypeList)
+    # if(condition=="scan"):
+    #     dfa.dfafunction(TOkenTypeList)
+    # else:
+    #     dfa.dfashow(TOkenTypeList)
         
     return TOkenTypeList,TOkenTextList,Lexer(input1)

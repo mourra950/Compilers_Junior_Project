@@ -6,6 +6,7 @@ from tkinter import Button
 from PIL import Image,ImageTk
 from numpy import size
 import teenytiny as teeny
+import syntaxTree as st
 root=Tk()
 root.title('Compiler Phase 2')
 root.geometry("1000x800")
@@ -40,10 +41,16 @@ def ttttt():
         parseTree.parserTree(e.get())
     else:
         pass
+def syntax():
+    check=teeny.analizer(e.get(),'scan')
+    if check !='Invalid' :   
+        st.syntaxtree(e.get())
+    else:
+        pass
 my_button2 =Button(frame,text="show your parsing table steps",font=('Arial',20),bg='#20B2AA',fg='black',padx=100,pady=10,command=open_first_follow).grid(row=6,column=5,padx=100,pady=10)
 my_button3 =Button(frame,text="show your parsing table",bg='#20B2AA',font=('Arial',20),fg='black',padx=100,pady=10,command=open_parse_table).grid(row=7,column=5,padx=100,pady=10)
 my_button1 =Button(frame,text="show your parse tree",bg='#20B2AA',font=('Arial',20),fg='black',padx=100,pady=10,command=ttttt).grid(row=8,column=5,padx=100,pady=10)
-my_button4 =Button(frame,text="show your Syntax Tree",bg='#20B2AA',font=('Arial',20),fg='black',padx=100,pady=10).grid(row=9,column=5,padx=100,pady=10)
+my_button4 =Button(frame,text="show your Syntax Tree",bg='#20B2AA',font=('Arial',20),fg='black',padx=100,pady=10,command=syntax).grid(row=9,column=5,padx=100,pady=10)
 img4=ImageTk.PhotoImage(Image.open("compilers.jpeg"))
 panel2=Label(frame,image=img4)
 panel2.photo=img4
