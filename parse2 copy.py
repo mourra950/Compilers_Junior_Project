@@ -178,37 +178,41 @@ class Parser:
     def factor(self):
         print('factor')
         
-        self.lis.append('(')
+        #self.lis.append('(')
         self.lis.append('factor')
         
         if self.checkToken(TokenType.NUM):
             
             self.lis.append('number')
             print("number")
-            self.lis.append(')')
+            #self.lis.append(')')
             self.nextToken()
         elif self.checkToken(TokenType.ID):
             print("identifier")
             self.lis.append('identifier')
-            self.lis.append(')')
+            #self.lis.append(')')
             self.nextToken()
         elif self.checkToken(TokenType.OPENBRACKET):
+            #self.lis.append('(')
             print('(')
             self.lis.append('OB')
-            print(self.curToken.kind)
+            #print(self.curToken.kind)
             self.nextToken()
             
             self.expressionTemp()
             
             self.nextToken()
+            print(')')
             self.lis.append('CL')
-            print(')')
+         
             self.nextToken()
             
-        elif self.checkToken(TokenType.CLOSEDBRACKET):
+        # elif self.checkToken(TokenType.CLOSEDBRACKET):
             
-            print(')')
-            self.nextToken()
+            #self.lis.append(')')
+            #print(')')
+            #self.lis.append('CL')
+            #self.nextToken()
 
     def Mulop(self):
         
@@ -242,7 +246,6 @@ def parserTree(input):
     P = Parser(token)
     P.program()
     terminals=['number','identifier','ε','+','-','/','*']
-    tls=['+','-','/','*']
     nonterminals=['Term','termdash','Expression','Expressiondash','addop']
     print('#########################################')
     buff='('
@@ -269,32 +272,10 @@ def parserTree(input):
         # if i in terminals:
         #     buff+=str(')')
     txt=' '.join(P.lis)+')))'
-    # print(txt)
-    index=-1
-    indexm=0
-    min=200
-    signs=[]
-    levels=[]
-    level=-1
-    for i in P.lis:
-        if i =='(':
-            level+=1
-        elif i==')':
-            level-=1
-        if i in tls:
-            index+=1
-            signs.append(i)
-            print(i,' level: ',level)
-            levels.append(level)
-            if min>level:
-                indexm=index
-                min=level
-    print('root',signs[indexm])
-    print(index)
+    print(txt)
     PnDraw.drawparsingtree(txt)
     
     
-    
-parserTree('3*5+3*4-3')
+parserTree('(3+x)*3')
 
 

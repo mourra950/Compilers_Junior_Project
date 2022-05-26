@@ -79,8 +79,14 @@ class Parser:
         self.term()
         self.counter+=1
         self.G.add_edge(str(temp),str(self.counter))
-        
+
         self.expressionDash()
+
+        #print('mmaaaaaaaaaaaaaamaa')
+        print(self.curToken.kind)
+        self.expressionDash()
+        #print('mmaaaaaaaaaaaaaamaa')
+
         self.nextToken()
 
     def Addop(self):
@@ -99,14 +105,14 @@ class Parser:
         elif self.checkToken(TokenType.PLUS):
             print("+")
             self.nextToken()
-        
-
+       
     def expressionDash(self):
         temp=self.counter
         
         print('Expressiondash')
         self.counter+=1
         if self.checkToken(TokenType.MINUS) or self.checkToken(TokenType.PLUS):
+            print("Aywa")
             self.G.add_edge(str(temp),str(temp+1))
             self.Addop()
             self.G.add_edge(str(temp),str(self.counter))
@@ -120,6 +126,8 @@ class Parser:
             print("ε")
             self.counter+=1
 
+            self.nextToken()
+       
 
     def term(self):
         temp=self.counter #1
@@ -158,7 +166,10 @@ class Parser:
         else:
             self.G.add_edge(str(temp),self.counter)
             print("ε")
+
             self.counter+=1
+            self.nextToken()    
+
 
     def factor(self):
         print('factor')
@@ -194,6 +205,7 @@ class Parser:
         elif self.checkToken(TokenType.ASTERISK):
             print("*")
             self.nextToken()
+           
 
 
 def main():
