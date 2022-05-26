@@ -212,7 +212,6 @@ class Parser:
         self.G.add_edge(str(self.counter-1),str(self.counter))
         # print(self.counter,'add op 9')
         self.counter+=1
-        
         print('Mulop')
         self.lis.append('(')
         self.lis.append('mulop')
@@ -243,6 +242,10 @@ def main():
     j = 0
     for i in P.lis:
         if i in terminals:
+          
+            if (i=='ε'):
+                return
+            print(i)
             buff+=str(i)+' '
             buff+=  ')'+' '
             if i =='ε':
@@ -259,7 +262,7 @@ def main():
         #     buff+=str(')')
     txt=' '.join(P.lis)+')))'
     PnDraw.drawparsingtree(txt)
-    
+    print(txt)
     
 main()
 
