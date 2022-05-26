@@ -198,10 +198,10 @@ class Parser:
             self.lis.append(')')
             self.nextToken()
         elif self.checkToken(TokenType.OPENBRACKET):
-            print(TokenType.OPENBRACKET)
+            print('(')
             self.nextToken()
             self.expressionTemp()
-            print(TokenType.CLOSEDBRACKET)
+            print(')')
             self.nextToken()
 
     def Mulop(self):
@@ -227,33 +227,33 @@ class Parser:
             self.nextToken()
 
 
-def main():
+def parserTree(input):
     g=nx.Graph()
-    lex , txt,token=t.analizer('3*3-3+3*3-3','scan')
+    lex , txt,token=t.analizer(input,'scan')
     lex = list(lex)
     print("//////////////////////////////////////////////////////////////////////////////////////////////")
     P = Parser(token)
     P.program()
-    terminals=['number','identifier','ε']
+    terminals=['number','identifier','ε','+','-','/','*']
     nonterminals=['Term','termdash','Expression','Expressiondash','addop']
     print('#########################################')
     buff='('
-    tc = 0
-    j = 0
-    for i in P.lis:
-        if i in terminals:
-          
-            if (i=='ε'):
-                return
-            print(i)
-            buff+=str(i)+' '
-            buff+=  ')'+' '
-            if i =='ε':
-                buff+=')'+' '
-        if i in nonterminals:
-            buff+='('+' '
-            buff+=str(i)+' '
+    index=0
+    # for i in P.lis:
+    #     if i in terminals:
+    #         if (i=='ε'):
+    #             continue
+    #         else:
+    #             print(i)
                 
+    #         buff+=str(i)+' '
+    #         buff+=  ')'+' '
+    #         if i =='ε':
+    #             buff+=')'+' '
+    #     if i in nonterminals:
+    #         buff+='('+' '
+    #         buff+=str(i)+' '
+    # print('#########################3')
                 
         # if i in nonterminals:
         #     print('(')
@@ -264,6 +264,6 @@ def main():
     PnDraw.drawparsingtree(txt)
     print(txt)
     
-main()
+
 
 
