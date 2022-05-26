@@ -229,23 +229,23 @@ class Parser:
 
 def main():
     g=nx.Graph()
-    lex , txt,token=t.analizer('3*3-3+3*3-3','scan')
+    lex , txt,token=t.analizer('3+x*3','scan')
     lex = list(lex)
     print("//////////////////////////////////////////////////////////////////////////////////////////////")
     P = Parser(token)
     P.program()
-    terminals=['number','identifier','ε']
+    terminals=['number','identifier','ε','+','-','/','*']
     nonterminals=['Term','termdash','Expression','Expressiondash','addop']
     print('#########################################')
     buff='('
-    tc = 0
-    j = 0
+    index=0
     for i in P.lis:
         if i in terminals:
-          
             if (i=='ε'):
-                return
-            print(i)
+                continue
+            else:
+                print(i)
+                
             buff+=str(i)+' '
             buff+=  ')'+' '
             if i =='ε':
@@ -253,7 +253,7 @@ def main():
         if i in nonterminals:
             buff+='('+' '
             buff+=str(i)+' '
-                
+    print('#########################3')
                 
         # if i in nonterminals:
         #     print('(')

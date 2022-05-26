@@ -1,52 +1,43 @@
-import sys
-from compiler.ast import Node
-import compiler , traceback
-from nltk.tree import *
-__all__ = ('printAst',)
-def printAst(ast, indent='  ', stream=sys.stdout, initlevel=0):
-    "Pretty-print an AST to the given output stream."
-    rec_node(ast, initlevel, indent, stream.write)
-    stream.write('\n')
-
-def rec_node(node, level, indent, write):
-    "Recurse through a node, pretty-printing it."
-    pfx = indent * level
-    if isinstance(node, Node):
-        write(pfx)
-        write(node.__class__.__name__)
-        write('(')
-
-        if any(isinstance(child, Node) for child in node.getChildren()):
-            for i, child in enumerate(node.getChildren()):
-                if i != 0:
-                    write(',')
-                write('\n')
-                rec_node(child, level+1, indent, write)
-            write('\n')
-            write(pfx)
-        else:
-            # None of the children as nodes, simply join their repr on a single
-            # line.
-            write(', '.join(repr(child) for child in node.getChildren()))
-
-        write(')')
-
-    else:
-        write(pfx)
-        write(repr(node))
-def main():
-    import optparse
-    parser = optparse.OptionParser(__doc__.strip())
-    opts, args = parser.parse_args()
-
-    if not args:
-        parser.error("You need to specify the name of Python files to print out.")
-
-    for fn in args:
-        try:
-            printAst(compiler.parseFile(fn), initlevel=1)
-        except SyntaxError,e:
-            traceback.print_exc()
-
-if __name__ == '__main__':
-    main()
+#root of the syntax tree
+listemp=[]
+lis=['N','+','N','-','N','*','N','+','N'] #n+n-r*t
+while len(lis)!=1:
+    index=0
+    
+    while index<len(lis):
+        
+        if lis[index]=='*':
+            listemp.append(lis.copy())
+            lis[index]='Multy'
+            lis.pop(index+1)
+            lis.pop(index-1)
+        index+=1
+    index=0
+    while index<len(lis):
+        
+        if lis[index]=='/':
+            listemp.append(lis.copy())
+            lis[index]='Div'
+            lis.pop(index+1)
+            lis.pop(index-1)
+        index+=1
+    index=0
+    while index<len(lis):
+        
+        if lis[index]=='+':
+            listemp.append(lis.copy())
+            lis[index]='Plus'
+            lis.pop(index+1)
+            lis.pop(index-1)
+        index+=1
+    index=0
+    while index<len(lis):
+        
+        if lis[index]=='-':
+            listemp.append(lis.copy())
+            lis[index]='Minus'
+            lis.pop(index+1)
+            lis.pop(index-1)
+        index+=1
+for i in listemp:
+    print(i)
